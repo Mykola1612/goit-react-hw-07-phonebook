@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import styles from './ContactList.module.css';
-import { deleteContacts, fetchContact } from 'redux/contacts/contacts.reducer';
+import { deleteContact, fetchContact } from 'redux/contacts/contacts.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  console.log(contacts);
   const filter = useSelector(getFilter);
 
   useEffect(() => {
@@ -29,11 +28,13 @@ const ContactList = () => {
       {handleFilterContacts().map(contact => {
         return (
           <li key={contact.id} className={styles.list_element}>
-            {contact.name}: {contact.number}{' '}
+            {contact.name}: {contact.phone}{' '}
             <button
               type="button"
               className={styles.button_contacts__list}
-              onClick={() => dispatch(deleteContacts(contact.id))}
+              onClick={() => {
+                dispatch(deleteContact(contact.id));
+              }}
             >
               Delete
             </button>

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import styles from './ContactForm.module.css';
-import { addContacts } from 'redux/contacts/contacts.reducer';
+import { addContact } from 'redux/contacts/contacts.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 
@@ -28,14 +28,14 @@ const ContactForm = () => {
     e.preventDefault();
     const newContact = {
       name: name,
-      number: number,
+      phone: number,
       id: nanoid(),
     };
 
     const contactExists = contacts.some(
       contact =>
         contact.name.toLowerCase() === newContact.name.toLowerCase() ||
-        contact.number === newContact.number
+        contact.phone === newContact.phone
     );
 
     if (contactExists) {
@@ -43,7 +43,7 @@ const ContactForm = () => {
       return;
     }
 
-    dispatch(addContacts(newContact));
+    dispatch(addContact(newContact));
     setName('');
     setNumber('');
   };
