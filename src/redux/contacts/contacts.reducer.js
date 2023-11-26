@@ -28,10 +28,19 @@ const contactsSlice = createSlice({
     },
   },
   extraReducers: builder =>
-    builder.addCase(fetchContacts.fulfilled, (state, { payload }) => {
-      state.contact = payload;
-      console.log(state.contact);
-    }),
+    builder
+      .addCase(fetchContacts.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.items = payload;
+      })
+      .addCase(fetchContacts.rejected, (state, { payload }) => {
+        state.error = payload;
+        state.isLoading = false;
+      }),
 });
 
 export const { addContacts, deleteContacts } = contactsSlice.actions;
